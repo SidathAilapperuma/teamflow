@@ -1,26 +1,44 @@
 
+import { useState } from "react";
+import { Menu } from "lucide-react";
+
+import Sidebar from "./layouts/Sidebar";
+import Dashboard from "./pages/Dashboard";
+
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-slate-100 p-8">
-      <main className="mx-auto max-w-5xl">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">
+    <div className="flex min-h-screen bg-slate-100">
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
+
+      <div className="min-w-0 flex-1">
+        {/* Mobile and tablet header */}
+        <header className="flex items-center gap-4 border-b border-slate-200 bg-white p-4 lg:hidden">
+          <button
+            type="button"
+            onClick={() => setIsSidebarOpen(true)}
+            aria-label="Open navigation menu"
+            aria-controls="teamflow-sidebar"
+            aria-expanded={isSidebarOpen}
+            className="rounded-lg p-2 text-slate-700 hover:bg-slate-100"
+          >
+            <Menu size={24} />
+          </button>
+
+          <span className="text-lg font-bold text-slate-900">
             TeamFlow
-          </h1>
-          <p className="mt-2 text-slate-600">
-            Collaborative Project Management
-          </p>
+          </span>
         </header>
 
-        <section className="rounded-xl bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-semibold">
-            Welcome to your dashboard
-          </h2>
-          <p className="mt-2 text-slate-500">
-            Your projects and tasks will appear here.
-          </p>
-        </section>
-      </main>
+        {/* Main dashboard content */}
+        <main className="min-w-0 p-4 sm:p-6 lg:p-8">
+          <Dashboard />
+        </main>
+      </div>
     </div>
   );
 }
